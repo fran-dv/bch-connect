@@ -4,13 +4,12 @@
     "": {
       "name": "bitcoincash-escrow",
       "dependencies": {
+        "@bch-wc2/interfaces": "^0.0.8",
+        "@bitauth/libauth": "^3.0.0",
         "@reown/appkit": "^1.8.7",
         "@reown/appkit-common": "^1.8.7",
         "@reown/appkit-universal-connector": "^1.8.7",
         "@reown/walletkit": "^1.2.11",
-        "@walletconnect/core": "^2.21.9",
-        "@walletconnect/sign-client": "^2.21.9",
-        "@walletconnect/utils": "^2.21.9",
         "cashscript": "^0.11.5",
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
@@ -40,7 +39,9 @@
   "packages": {
     "@adraffy/ens-normalize": ["@adraffy/ens-normalize@1.11.1", "", {}, "sha512-nhCBV3quEgesuf7c7KYfperqSS14T8bYuvJ8PcLJp6znkZpFc0AuW4qBtr8eKVyPPe/8RSr7sglCWPU5eaxwKQ=="],
 
-    "@bitauth/libauth": ["@bitauth/libauth@3.1.0-next.8", "", {}, "sha512-Pm+Ju+YP3JeBLLTiVrBnia2wwE4G17r4XqpvPRMcklElJTe8J6x3JgKRg1by0Xm3ZY6UFxACkEAoSA+x419/zA=="],
+    "@bch-wc2/interfaces": ["@bch-wc2/interfaces@0.0.8", "", { "peerDependencies": { "@bitauth/libauth": "^3.1.0-next.2" } }, "sha512-gRt95azHVqoViGI4X3F1ObgTpYBh3//KaCHRBWSMJbAKNM09T+TA/h9kx9u9SZmE8otMtpFSy4awSHWHUQZmbg=="],
+
+    "@bitauth/libauth": ["@bitauth/libauth@3.0.0", "", {}, "sha512-3yoL31XpnhAnf5nDVMFk4xPqebxDwXrgYAwpa31ARJnV5A/eXWlpNYvCd6FTZPFM4VvKfjCBi+jRCrw1hOZ0Jg=="],
 
     "@cashscript/utils": ["@cashscript/utils@0.11.5", "", { "dependencies": { "@bitauth/libauth": "^3.1.0-next.2" } }, "sha512-TxXPQiOEpDNrYSAohW+3161XoeBHTYLmwAZP37m0qAE/n6M3yTR1fUP5PHMWGFnfLEA4C7rCq6Yn3HqhXjtDDQ=="],
 
@@ -768,6 +769,8 @@
 
     "zod": ["zod@3.22.4", "", {}, "sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg=="],
 
+    "@cashscript/utils/@bitauth/libauth": ["@bitauth/libauth@3.1.0-next.8", "", {}, "sha512-Pm+Ju+YP3JeBLLTiVrBnia2wwE4G17r4XqpvPRMcklElJTe8J6x3JgKRg1by0Xm3ZY6UFxACkEAoSA+x419/zA=="],
+
     "@emnapi/core/tslib": ["tslib@2.8.1", "", {}, "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="],
 
     "@emnapi/runtime/tslib": ["tslib@2.8.1", "", {}, "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="],
@@ -811,6 +814,8 @@
     "anymatch/picomatch": ["picomatch@2.3.1", "", {}, "sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA=="],
 
     "async-mutex/tslib": ["tslib@2.8.1", "", {}, "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="],
+
+    "cashscript/@bitauth/libauth": ["@bitauth/libauth@3.1.0-next.8", "", {}, "sha512-Pm+Ju+YP3JeBLLTiVrBnia2wwE4G17r4XqpvPRMcklElJTe8J6x3JgKRg1by0Xm3ZY6UFxACkEAoSA+x419/zA=="],
 
     "cliui/string-width": ["string-width@4.2.3", "", { "dependencies": { "emoji-regex": "^8.0.0", "is-fullwidth-code-point": "^3.0.0", "strip-ansi": "^6.0.1" } }, "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g=="],
 

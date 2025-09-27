@@ -1,5 +1,5 @@
 {
-  "name": "bitcoincash-escrow",
+  "name": "bitcoincash-wallet-connect",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,13 +12,12 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@bch-wc2/interfaces": "^0.0.8",
+    "@bitauth/libauth": "^3.0.0",
     "@reown/appkit": "^1.8.7",
     "@reown/appkit-common": "^1.8.7",
     "@reown/appkit-universal-connector": "^1.8.7",
     "@reown/walletkit": "^1.2.11",
-    "@walletconnect/core": "^2.21.9",
-    "@walletconnect/sign-client": "^2.21.9",
-    "@walletconnect/utils": "^2.21.9",
     "cashscript": "^0.11.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
