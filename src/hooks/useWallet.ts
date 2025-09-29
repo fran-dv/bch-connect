@@ -1,4 +1,4 @@
-import { BCHMethods, CurrentConfig } from "@/config/config";
+import { BCHMethods, NetworksIds } from "@/config/config";
 import {
   useWalletConnectContext,
   type ConnectWalletCallback,
@@ -30,16 +30,14 @@ export interface UseWalletReturnType {
 }
 
 export const useWallet = (): UseWalletReturnType => {
-  const { connect, disconnect, session, provider } = useWalletConnectContext();
+  const { connect, disconnect, session, provider, config } =
+    useWalletConnectContext();
   const isConnected = !!session;
   const isConnecting = false;
   const [addresses, setAddresses] = useState<string[] | null>(null);
 
   useEffect(() => {
     if (!isConnected || !session || !provider) {
-      console.log(
-        "is connected is false or ther is not sessions / provider. Bye",
-      );
       setAddresses(null);
       return;
     }
@@ -47,15 +45,17 @@ export const useWallet = (): UseWalletReturnType => {
     const fetchAndSetAddresses = async () => {
       try {
         const addresses = await provider?.client.request<string[]>({
-          chainId: CurrentConfig.chainId,
+          chainId: NetworksIds[config.network],
           topic: session.topic,
           request: {
-            method: "bch_getAddresses",
+            method: BCHMethods.getAddresses,
             params: {},
           },
         });
 
         if (!addresses) return;
+
+        console.log("Addresses:", addresses);
 
         setAddresses(addresses);
       } catch (err) {
@@ -64,7 +64,7 @@ export const useWallet = (): UseWalletReturnType => {
     };
 
     fetchAndSetAddresses();
-  }, [session, provider, isConnected]);
+  }, [session, provider, isConnected, config.network]);
 
   const signTransaction = async (
     options: WcSignTransactionRequest,
@@ -79,7 +79,7 @@ export const useWallet = (): UseWalletReturnType => {
     try {
       const response = await provider.client.request<WcSignTransactionResponse>(
         {
-          chainId: CurrentConfig.chainId,
+          chainId: NetworksIds[config.network],
           topic: session.topic,
           request: {
             method: BCHMethods.signTransaction,
@@ -107,7 +107,7 @@ export const useWallet = (): UseWalletReturnType => {
 
     try {
       const response = await provider.client.request<WcSignMessageResponse>({
-        chainId: CurrentConfig.chainId,
+        chainId: NetworksIds[config.network],
         topic: session.topic,
         request: {
           method: BCHMethods.signMessage,

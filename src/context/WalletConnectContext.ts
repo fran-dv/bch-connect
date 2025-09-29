@@ -1,3 +1,4 @@
+import type { Configuration } from "@/config/config";
 import type { UniversalConnector } from "@reown/appkit-universal-connector";
 import { createContext, useContext } from "react";
 
@@ -5,6 +6,7 @@ export type ConnectWalletCallback = () => Promise<void>;
 export type DisconnectWalletCallback = () => Promise<void>;
 
 export interface WalletConnectContext {
+  config: Configuration;
   session: UniversalConnector["provider"]["session"] | null;
   provider: UniversalConnector["provider"] | null;
 

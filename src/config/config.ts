@@ -7,7 +7,7 @@ if (!projectId) {
   throw new Error("Project ID is not defined");
 }
 
-export const ChainIds = {
+export const NetworksIds = {
   mainnet: "bch:bitcoincash",
   testnet: "bch:bchtest",
   regtest: "bch:bchreg",
@@ -19,45 +19,74 @@ export const BCHMethods = {
   signMessage: "bch_signMessage",
 } as const;
 
-const bchTestnet: CustomCaipNetwork<"bch"> = {
+const bchMainnet: CustomCaipNetwork<"bch"> = {
   id: "bch",
   chainNamespace: "bch" as const,
-  caipNetworkId: ChainIds.testnet,
+  caipNetworkId: NetworksIds.mainnet,
   name: "Bitcoin Cash",
   nativeCurrency: { name: "Bitcoin Cash", symbol: "BCH", decimals: 8 },
   rpcUrls: { default: { http: [] } },
-  testnet: true,
-};
-
-export const networks = [bchTestnet] as CustomCaipNetwork[];
-
-export interface Configuration {
-  chainId: string;
-  networks: CustomCaipNetwork[];
-}
-
-export const CurrentConfig: Configuration = {
-  chainId: ChainIds.testnet,
-  networks: networks,
+  testnet: false,
 } as const;
 
-export async function getUniversalConnector() {
+const bchTestnet: CustomCaipNetwork<"bch"> = {
+  id: "bch",
+  chainNamespace: "bch" as const,
+  caipNetworkId: NetworksIds.testnet,
+  name: "Bitcoin Cash (Testnet)",
+  nativeCurrency: { name: "Bitcoin Cash", symbol: "BCH", decimals: 8 },
+  rpcUrls: { default: { http: [] } },
+  testnet: true,
+} as const;
+
+const bchRegtest: CustomCaipNetwork<"bch"> = {
+  id: "bch",
+  chainNamespace: "bch" as const,
+  caipNetworkId: NetworksIds.regtest,
+  name: "Bitcoin Cash (Regtest)",
+  nativeCurrency: { name: "Bitcoin Cash", symbol: "BCH", decimals: 8 },
+  rpcUrls: { default: { http: [] } },
+  testnet: true,
+} as const;
+
+export const Networks: Record<
+  "mainnet" | "testnet" | "regtest",
+  CustomCaipNetwork
+> = {
+  mainnet: bchMainnet as CustomCaipNetwork,
+  testnet: bchTestnet as CustomCaipNetwork,
+  regtest: bchRegtest as CustomCaipNetwork,
+} as const;
+
+export interface Configuration {
+  projectId: string;
+  network: "mainnet" | "testnet" | "regtest";
+  metadata: {
+    name: string;
+    description: string;
+    url: string;
+    icons: string[];
+  };
+}
+
+export const createConfig = (options: Configuration): Configuration => options;
+
+export async function getUniversalConnector({
+  projectId,
+  network,
+  metadata,
+}: Configuration): Promise<UniversalConnector> {
   const universalConnector = await UniversalConnector.init({
     projectId,
-    metadata: {
-      name: "My project",
-      description: "My project",
-      url: "https://example.com",
-      icons: ["https://example.com/icon.png"],
-    },
     networks: [
       {
         methods: Object.values(BCHMethods),
-        chains: networks,
+        chains: [Networks[network]],
         events: ["addressesChanged"],
         namespace: "bch",
       },
     ],
+    metadata,
   }).catch((err) => {
     console.error("Failed to initialize UniversalConnector:", err);
     throw err;
