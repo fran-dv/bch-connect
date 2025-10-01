@@ -1,57 +1,9 @@
 {
-  "name": "bch-connect",
-  "private": false,
-  "version": "0.1.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "prepare": "husky",
-    "format": "prettier --write ."
-  },
-  "peerDependencies": {
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
-  },
-  "dependencies": {
-    "@bch-wc2/interfaces": "^0.0.8",
-    "@bitauth/libauth": "^3.0.0",
-    "@reown/appkit": "^1.8.7",
-    "@reown/appkit-common": "^1.8.7",
-    "@reown/appkit-universal-connector": "^1.8.7"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.36.0",
-    "@types/react": "^19.1.13",
-    "@types/react-dom": "^19.1.9",
-    "@vitejs/plugin-react-swc": "^4.1.0",
-    "eslint": "^9.36.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^16.4.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.1",
-    "prettier": "3.6.2",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.44.0",
-    "vite": "npm:rolldown-vite@7.1.12"
-  },
-  "overrides": {
-    "vite": "npm:rolldown-vite@7.1.12"
-  },
-  "files": [
-    "dist/**/*"
-  ],
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md,css,scss}": [
-      "prettier --write"
+    "name": "bch-connect-monorepo",
+    "private": true,
+    "type": "module",
+    "workspaces": [
+        "packages/bch-connect",
+        "examples"
     ]
-  }
 }
