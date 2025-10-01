@@ -1,13 +1,10 @@
 import type { CustomCaipNetwork } from "@reown/appkit-common";
 import { UniversalConnector } from "@reown/appkit-universal-connector";
 
-export const projectId = import.meta.env.VITE_REOWN_PROJECT_ID;
-
-if (!projectId) {
-  throw new Error("Project ID is not defined");
-}
-
-export const NetworksIds = {
+export const NetworksIds: Record<
+  "mainnet" | "testnet" | "regtest",
+  "bch:bitcoincash" | "bch:bchtest" | "bch:bchreg"
+> = {
   mainnet: "bch:bitcoincash",
   testnet: "bch:bchtest",
   regtest: "bch:bchreg",
@@ -88,7 +85,6 @@ export async function getUniversalConnector({
     ],
     metadata,
   }).catch((err) => {
-    console.error("Failed to initialize UniversalConnector:", err);
     throw err;
   });
 
