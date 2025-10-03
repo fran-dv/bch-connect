@@ -92,7 +92,7 @@ export const useWallet = (): UseWalletReturnType => {
     return () => {
       provider.removeListener("addressesChanged", handleAddressesChanged);
     };
-  }, []);
+  }, [fetchAddresses, provider]);
 
   useEffect(() => {
     if (!address) {

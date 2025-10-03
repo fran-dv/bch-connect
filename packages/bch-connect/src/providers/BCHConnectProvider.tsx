@@ -22,17 +22,17 @@ export const BCHConnectProvider: React.FC<Props> = ({
   const [disconnectError, setDisconnectError] = useState<Error | null>(null);
 
   useEffect(() => {
-    if (universalConnector) return;
+    if (universalConnector !== null) return;
     // Initialize the universal connector only on mount
     (async () => {
       try {
-        const universalConnector = await getUniversalConnector(config);
-        setUniversalConnector(universalConnector);
+        const connector = await getUniversalConnector(config);
+        setUniversalConnector(connector);
       } catch (err) {
         setConnectError(err as Error);
       }
     })();
-  }, []);
+  }, [config, universalConnector]);
 
   useEffect(() => {
     const provider = universalConnector?.provider;
@@ -55,7 +55,7 @@ export const BCHConnectProvider: React.FC<Props> = ({
       provider.removeListener("connect", handleConnect);
       provider.removeListener("disconnect", handleDisconnect);
     };
-  }, []);
+  }, [universalConnector?.provider]);
 
   useEffect(() => {
     const currentSession = universalConnector?.provider.session;
