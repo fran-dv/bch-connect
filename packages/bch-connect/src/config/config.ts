@@ -1,5 +1,7 @@
+import type { CreateAppKit } from "@reown/appkit";
 import type { CustomCaipNetwork } from "@reown/appkit-common";
 import { UniversalConnector } from "@reown/appkit-universal-connector";
+import type { UniversalProviderOpts } from "@walletconnect/universal-provider";
 
 export const NetworksIds: Record<
   "mainnet" | "testnet" | "regtest",
@@ -64,6 +66,17 @@ export interface Configuration {
     url: string;
     icons: string[];
   };
+  modalConfig?: Omit<
+    CreateAppKit,
+    | "projectId"
+    | "metadata"
+    | "manualWCControl"
+    | "networks"
+    | "universalProvider"
+  >;
+  providerConfig?:
+    | Omit<UniversalProviderOpts, "projectId" | "metadata" | "client">
+    | undefined;
 }
 
 export const createConfig = (options: Configuration): Configuration => options;
@@ -72,6 +85,8 @@ export async function getUniversalConnector({
   projectId,
   network,
   metadata,
+  modalConfig,
+  providerConfig,
 }: Configuration): Promise<UniversalConnector> {
   const universalConnector = await UniversalConnector.init({
     projectId,
@@ -84,6 +99,8 @@ export async function getUniversalConnector({
       },
     ],
     metadata,
+    modalConfig,
+    providerConfig,
   }).catch((err) => {
     throw err;
   });
