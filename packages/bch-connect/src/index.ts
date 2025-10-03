@@ -1,4 +1,3 @@
-export * from "@/hooks/useGetAddresses";
 export * from "@/hooks/useSignMessage";
 export * from "@/hooks/useSignTransaction";
 export * from "@/hooks/useWallet";
