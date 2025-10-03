@@ -12,8 +12,8 @@ export interface UseWalletReturnType {
   tokenAddress: string | null;
   areAddressesLoading: boolean;
   addressError: Error | null;
+  tokenAddressError: Error | null;
   isConnected: boolean;
-  isConnecting: boolean;
   connectError: Error | null;
   isDisconnecting: boolean;
   disconnectError: Error | null;
@@ -30,7 +30,6 @@ export const useWallet = (): UseWalletReturnType => {
     session,
     provider,
     config,
-    isConnecting,
     connectError,
     isDisconnecting,
     disconnectError,
@@ -41,6 +40,9 @@ export const useWallet = (): UseWalletReturnType => {
   const [areAddressesLoading, setAreAddressesLoading] = useState(false);
   const [addressError, setAddressError] = useState<Error | null>(null);
   const [tokenAddress, setTokenAddress] = useState<string | null>(null);
+  const [tokenAddressError, setTokenAddressError] = useState<Error | null>(
+    null,
+  );
   const isError = !!addressError || !!connectError || !!disconnectError;
 
   const fetchAddresses = useCallback(async () => {
@@ -60,16 +62,43 @@ export const useWallet = (): UseWalletReturnType => {
   }, [getAddresses]);
 
   useEffect(() => {
-    if (!isConnected || !session || !provider) {
+    if (!session) {
       setAddress(null);
       return;
     }
 
-    fetchAddresses();
-  }, [session, isConnected, provider, fetchAddresses, config.network]);
+    const namespaceAddress = session.namespaces.bch.accounts[0];
+    if (!namespaceAddress) {
+      setAddressError(new Error("No address found in session's namespace"));
+      setAddress(null);
+      return;
+    }
+
+    const prefix = "bch:";
+    const cleanAddress = namespaceAddress.replace(prefix, "");
+    setAddress(cleanAddress);
+    setAddressError(null);
+  }, [session]);
 
   useEffect(() => {
-    if (!address) return;
+    if (!provider) return;
+
+    const handleAddressesChanged = () => {
+      fetchAddresses();
+    };
+
+    provider.on("addressesChanged", handleAddressesChanged);
+
+    return () => {
+      provider.removeListener("addressesChanged", handleAddressesChanged);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!address) {
+      setTokenAddress(null);
+      return;
+    }
 
     try {
       const tokenAddress = addressToTokenAddress({
@@ -77,9 +106,9 @@ export const useWallet = (): UseWalletReturnType => {
         network: config.network,
       });
       setTokenAddress(tokenAddress);
-      setAddressError(null);
+      setTokenAddressError(null);
     } catch (err) {
-      setAddressError(err as Error);
+      setTokenAddressError(err as Error);
     }
   }, [address, config.network]);
 
@@ -88,8 +117,8 @@ export const useWallet = (): UseWalletReturnType => {
     tokenAddress,
     areAddressesLoading,
     addressError,
+    tokenAddressError,
     isConnected,
-    isConnecting,
     connectError,
     isDisconnecting,
     disconnectError,
