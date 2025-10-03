@@ -15,4 +15,23 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Split vendor libraries into separate chunks
+          if (id.includes("node_modules")) {
+            const packageName = id
+              .toString()
+              .split("node_modules/")[1]
+              .split("/")[0]
+              .toString();
+            if (packageName) {
+              return `vendor-${packageName}`;
+            }
+          }
+        },
+      },
+    },
+  },
 });
