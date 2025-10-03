@@ -15,7 +15,6 @@ export interface UseWalletReturnType {
   tokenAddressError: Error | null;
   isConnected: boolean;
   connectError: Error | null;
-  isDisconnecting: boolean;
   disconnectError: Error | null;
   isError: boolean;
   connect: ConnectWalletCallback;
@@ -31,7 +30,6 @@ export const useWallet = (): UseWalletReturnType => {
     provider,
     config,
     connectError,
-    isDisconnecting,
     disconnectError,
   } = useWalletConnectContext();
   const { getAddresses } = useGetAddresses();
@@ -120,7 +118,6 @@ export const useWallet = (): UseWalletReturnType => {
     tokenAddressError,
     isConnected,
     connectError,
-    isDisconnecting,
     disconnectError,
     isError,
     connect,

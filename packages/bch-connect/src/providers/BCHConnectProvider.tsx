@@ -18,7 +18,6 @@ export const BCHConnectProvider: React.FC<Props> = ({
     UniversalConnector["provider"]["session"] | null
   >(null);
   const [connectError, setConnectError] = useState<Error | null>(null);
-  const [isDisconnecting, setIsDisconnecting] = useState(false);
   const [disconnectError, setDisconnectError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -81,14 +80,11 @@ export const BCHConnectProvider: React.FC<Props> = ({
 
     if (!provider) return;
 
-    setIsDisconnecting(true);
     try {
       await provider.disconnect();
       setSession(null);
     } catch (err) {
       setDisconnectError(err as Error);
-    } finally {
-      setIsDisconnecting(false);
     }
   };
 
@@ -97,7 +93,6 @@ export const BCHConnectProvider: React.FC<Props> = ({
     session,
     provider: universalConnector?.provider ?? null,
     connectError,
-    isDisconnecting,
     disconnectError,
     connect,
     disconnect,
