@@ -17,10 +17,22 @@ export const BCHConnectProvider: React.FC<Props> = ({
   const [session, setSession] = useState<
     UniversalConnector["provider"]["session"] | null
   >(null);
-  const [isConnecting, setIsConnecting] = useState(false);
   const [connectError, setConnectError] = useState<Error | null>(null);
   const [isDisconnecting, setIsDisconnecting] = useState(false);
   const [disconnectError, setDisconnectError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    if (universalConnector) return;
+    // Initialize the universal connector only on mount
+    (async () => {
+      try {
+        const universalConnector = await getUniversalConnector(config);
+        setUniversalConnector(universalConnector);
+      } catch (err) {
+        setConnectError(err as Error);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     const provider = universalConnector?.provider;
@@ -43,20 +55,7 @@ export const BCHConnectProvider: React.FC<Props> = ({
       provider.removeListener("connect", handleConnect);
       provider.removeListener("disconnect", handleDisconnect);
     };
-  }, [universalConnector?.provider]);
-
-  useEffect(() => {
-    if (universalConnector) return;
-
-    (async () => {
-      try {
-        const universalConnector = await getUniversalConnector(config);
-        setUniversalConnector(universalConnector);
-      } catch (err) {
-        setConnectError(err as Error);
-      }
-    })();
-  }, [universalConnector, config]);
+  }, []);
 
   useEffect(() => {
     const currentSession = universalConnector?.provider.session;
@@ -69,13 +68,11 @@ export const BCHConnectProvider: React.FC<Props> = ({
   const connect = async () => {
     if (!universalConnector) return;
 
-    setIsConnecting(true);
     try {
-      await universalConnector.connect();
+      const result = await universalConnector.connect();
+      setSession(result.session);
     } catch (err) {
       setConnectError(err as Error);
-    } finally {
-      setIsConnecting(false);
     }
   };
 
@@ -99,7 +96,6 @@ export const BCHConnectProvider: React.FC<Props> = ({
     config,
     session,
     provider: universalConnector?.provider ?? null,
-    isConnecting,
     connectError,
     isDisconnecting,
     disconnectError,
