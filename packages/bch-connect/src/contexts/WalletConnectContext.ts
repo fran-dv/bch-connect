@@ -9,7 +9,6 @@ export interface WalletConnectContext {
   config: Configuration;
   session: UniversalConnector["provider"]["session"] | null;
   provider: UniversalConnector["provider"] | null;
-  isConnecting: boolean;
   isDisconnecting: boolean;
   connectError: Error | null;
   disconnectError: Error | null;
