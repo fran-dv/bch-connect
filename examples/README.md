@@ -1,9 +1,10 @@
 # BCH Connect Example
 
-This is a simple (but beautiful) example demonstrating the library in action.
+This is a simple (yet beautiful) example demonstrating the library in action.
 
 - In the [`main.tsx`](./src/main.tsx) file, you'll see how the configuration and provider are set up.
-- In the [`Example`](./src/components/Example/Example.tsx) component, the library's hooks are used to connect a wallet, read its data, and sign transactions.
+- In the [`ConnectButton`](./src/components/ConnectButton/ConnectButton.tsx) component, the library's hook `useWallet` is used to connect and disconnect a wallet.
+- In the [`Example`](./src/components/Example/Example.tsx) component, the library's hooks `useWallet` and `useSignTransaction` are used to read wallet data and sign transactions.
 
 ![Example screenshot](preview-images/screenshot-1.png)
 
