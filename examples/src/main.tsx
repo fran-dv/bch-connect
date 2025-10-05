@@ -14,6 +14,10 @@ const config = createConfig({
     url: "https://github.com/fran-dv/bch-connect",
     icons: ["https://placehold.co/600x400?text=BCHConnect"],
   },
+  modalConfig: {
+    allWallets: "HIDE",
+    themeMode: "dark",
+  },
 });
 
 createRoot(document.getElementById("root")!).render(
