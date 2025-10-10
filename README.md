@@ -18,12 +18,14 @@ It abstracts the implementation of [wc2-bch-bcr](https://github.com/mainnet-pat/
 
 ## Table of contents
 
-- [Getting started](#getting-started)
-- [Example](#example)
-- [Local development](#local-development)
-- [API reference](#api-reference)
+- [⚡ Getting started](#getting-started)
+- [💡 Example](#example)
+- [🌱 Roadmap](#roadmap)
+- [🧩 API reference](#api-reference)
+- [🧑‍💻 Local development](#local-development)
+- [🤝 Contribute](#contribute)
 
-## Getting started
+## <a name="getting-started"></a> ⚡ Getting started
 
 Installing and using **bch-connect** is straightforward. Just follow these steps:
 
@@ -112,9 +114,9 @@ function App() {
 }
 ```
 
-You can also see the [Example](#example) section.
+See the [Example](#example) section for a working demo.
 
-## Example
+## <a name="example"></a> 💡 Example
 
 Visit the example [**live demo here**](https://bch-connect-example.netlify.app/).
 
@@ -232,56 +234,27 @@ export const Example: React.FC = () => {
 };
 ```
 
-## Local Development
+## <a name="roadmap"></a> 🌱 Roadmap (tentative)
 
-To run this repository locally for development, follow these steps:
+**Current focus**
 
-1. Clone the repository
+- Fix Paytaca connection issue [in progress]
 
-```bash
-git clone https://github.com/fran-dv/bch-connect.git
-```
+**Next tasks**
 
-2. Install dependencies
+- Write automated tests
+- Create comprehensive online documentation
+- Engage with the community and promote the library
+- Iterate and improve based on feedback
 
-From the root of the repository:
+### Future possibilities (not guaranteed)
 
-```bash
-bun install
-```
+- Build a custom connection modal UI to decouple it from AppKit UI and wc2-bch-bcr
+- Add support for CashConnect specification which is currently in pre-alpha
+- Expand the library beyond React
+- Develop a `bch-connect-wallet-side` companion library to simplify wallet-side integration (this is a mid- to long-term idea and may not be feasible)
 
-This will install dependencies for both the library (packages/bch-connect) and the example app (examples).
-
-3. Run the library in development mode
-
-To test the library live while developing, first link it in the example app’s package.json:
-
-```jsonc
-"dependencies": {
-  // ...
-  "bch-connect": "workspaces:*"
-}
-```
-
-Then, start the development server for the library:
-
-```bash
-cd packages/bch-connect
-bun dev #or the equivalent command for your package manager
-```
-
-4. Run the example app
-
-In a separate terminal:
-
-```bash
-cd examples
-bun dev #or the equivalent command for your package manager
-```
-
-> **Note:** The example project runs its scripts with Bun. If you prefer Node.js, you can update the scripts in `examples/package.json` accordingly.
-
-## API Reference
+## <a name="api-reference"></a> 🧩 API Reference
 
 ### `createConfig(options: Configuration): Configuration`
 
@@ -440,7 +413,56 @@ interface WcSignMessageRequest {
 type WcSignMessageResponse = string;
 ```
 
-## Contribute
+## <a name="local-development"></a> 🧑‍💻 Local Development
+
+To run this repository locally for development, follow these steps:
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/fran-dv/bch-connect.git
+```
+
+2. Install dependencies
+
+From the root of the repository:
+
+```bash
+bun install
+```
+
+This will install dependencies for both the library (packages/bch-connect) and the example app (examples).
+
+3. Run the library in development mode
+
+To test the library live while developing, first link it in the example app’s package.json:
+
+```jsonc
+"dependencies": {
+  // ...
+  "bch-connect": "workspaces:*"
+}
+```
+
+Then, start the development server for the library:
+
+```bash
+cd packages/bch-connect
+bun dev #or the equivalent command for your package manager
+```
+
+4. Run the example app
+
+In a separate terminal:
+
+```bash
+cd examples
+bun dev #or the equivalent command for your package manager
+```
+
+> **Note:** The example project runs its scripts with Bun. If you prefer Node.js, you can update the scripts in `examples/package.json` accordingly.
+
+## <a name="contribute"></a> 🤝 Contribute
 
 This project is open source and contributions are more than welcome!
 
