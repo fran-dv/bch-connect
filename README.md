@@ -238,11 +238,11 @@ export const Example: React.FC = () => {
 
 **Current focus**
 
-- Fix Paytaca connection issue [in progress]
+- Fix Paytaca connection issue
+- Write automated tests
 
 **Next tasks**
 
-- Write automated tests
 - Create comprehensive online documentation
 - Engage with the community and promote the library
 - Iterate and improve based on feedback
